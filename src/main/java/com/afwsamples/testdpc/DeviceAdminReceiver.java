@@ -53,7 +53,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.Set;
 /** Handles events related to the managed profile. */
 public class DeviceAdminReceiver extends android.app.admin.DeviceAdminReceiver {
   private static final String TAG = "DeviceAdminReceiver";
@@ -470,6 +471,15 @@ public class DeviceAdminReceiver extends android.app.admin.DeviceAdminReceiver {
     UserManager userManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
     long serialNumber = userManager.getSerialNumberForUser(Binder.getCallingUserHandle());
     Log.i(TAG, "Device admin enabled in user with serial number: " + serialNumber);
+
+    DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+    ComponentName admin = getComponentName(context);
+    
+    String affilId = "testdpc-headless-aditya_0";
+    //dpm.setAffiliationIds(admin, Arrays.asList(affilId));
+    Set<String> affiliationIds = new HashSet<>(); 
+    affiliationIds.add(affilId);
+    dpm.setAffiliationIds(admin, affiliationIds);
   }
 
   private static File logFile(Context context) {
