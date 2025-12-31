@@ -16,6 +16,8 @@
 
 package com.afwsamples.testdpc;
 import java.util.Arrays;
+import java.util.HashSet; 
+import java.util.Set; 
 
 import android.annotation.TargetApi;
 import android.app.NotificationManager;
@@ -473,9 +475,12 @@ public class DeviceAdminReceiver extends android.app.admin.DeviceAdminReceiver {
     Log.i(TAG, "Device admin enabled in user with serial number: " + serialNumber);
     DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
     ComponentName admin = getComponentName(context);
-    
     String affilId = "testdpc-headless-aditya_0";
-    dpm.setAffiliationIds(admin, Arrays.asList(affilId));
+    Set<String> affiliationIds = new HashSet<>(); 
+    affiliationIds.add(affilId);
+    dpm.setAffiliationIds(admin, affiliationIds);
+    
+    //dpm.setAffiliationIds(admin, Arrays.asList(affilId));
   }
 
   private static File logFile(Context context) {
